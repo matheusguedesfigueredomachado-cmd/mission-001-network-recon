@@ -1,0 +1,6 @@
+{
+    "timeout": 5,
+    "output_directory": "output",
+    "log_directory": "logs",
+    "log_level": "INFO"
+}
