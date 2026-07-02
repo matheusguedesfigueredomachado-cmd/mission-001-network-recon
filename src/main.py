@@ -1,4 +1,5 @@
 import logging
+import subprocess
 from cli.arguments import create_parse
 from utils.validator import validate_target
 from utils.config import load_config
@@ -24,6 +25,9 @@ def main():
         target_validado = validate_target(args.target)
         logger.info(f"Target validated successfully: {target_validado}")
 
+        subprocess.run(["nmap", "--version"], stdout=subprocess.DEVNULL, stderr= subprocess.DEVNULL, check=True)
+        print("Nmap Esta Instalado ")
+
         
         target_str = str(target_validado)
 
@@ -36,10 +40,15 @@ def main():
         print("\nHosts ativos encontrados:")
         print(resultados)
         logger.info(f"Scan finished. Found {len(resultados)} hosts.")
-        
+    
+    except FileNotFoundError as erro:    
+      logger.error(f"FileNotFoundError {erro}")   
+      print("Erro: O Nmap não está instalado ou não foi adicionado ao PATH do sistema.")
+
     except ValueError as erro:
         logger.error(f"Validation failed: {erro}")
         print(f"Erro: {erro}")
+
     except Exception as erro_inesperado:
         
         logger.error(f"Unexpected error: {erro_inesperado}")
